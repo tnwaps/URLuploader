@@ -43,7 +43,6 @@ async def youtube_dl_call_back(bot, update):
     tg_send_type, youtube_dl_format, youtube_dl_ext = cb_data.split("|")
     thumb_image_path = Config.DOWNLOAD_LOCATION + \
         "/" + str(update.from_user.id) + ".jpg"
-    logger.info(thumb_image_path)
     save_ytdl_json_path = Config.DOWNLOAD_LOCATION + \
         "/" + str(update.from_user.id) + ".json"
     try:
@@ -149,9 +148,6 @@ async def youtube_dl_call_back(bot, update):
         command_to_exec.append(youtube_dl_password)
     command_to_exec.append("--no-warnings")
     # command_to_exec.append("--quiet")
-    if "hotstar" in youtube_dl_url:
-        command_to_exec.append("--geo-bypass-country")
-        command_to_exec.append("IN")
     logger.info(command_to_exec)
     start = datetime.now()
     process = await asyncio.create_subprocess_exec(
@@ -221,13 +217,8 @@ async def youtube_dl_call_back(bot, update):
                         duration = metadata.get('duration').seconds
             # get the correct width, height, and duration for videos greater than 10MB
             if os.path.exists(thumb_image_path):
-                logger.info(f"Thumbtest : {thumb_image_path}")
                 width = 0
                 height = 0
-                #if thumb_image_path.endswith("webp"):
-                   # Image.open(thumb_image_path).convert(
-                     #   "RGB").save(thumb_image_path)
-                  #  img = Image.open(thumb_image_path)
                 metadata = extractMetadata(createParser(thumb_image_path))
                 if metadata.has("width"):
                     width = metadata.get("width")
@@ -332,9 +323,9 @@ async def youtube_dl_call_back(bot, update):
             media_album_p = []
             if images is not None:
                 i = 0
-                caption = "© @TGBotsZ"
+                caption = "© @tnvip_bot"
                 if is_w_f:
-                    caption = "/upgrade to Plan D to remove the watermark\n© @AnyDLBot"
+                    caption = "/upgrade to Plan D to remove the watermark\n© @tnvip_bot"
                 for image in images:
                     if os.path.exists(image):
                         if i == 0:
